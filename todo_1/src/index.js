@@ -79,9 +79,9 @@ const App = () => {
     const welcomBox = 'завершить сеанс'; // -----------Строка // можно передавать в JSX через {}
 
     const todoData = [
-        {lbl: "Drink Koffe", important: false},
-        {lbl: "Make Awesome App", important: true},
-        {lbl: "Have a lanch", important: false}
+        {lbl: "Drink Koffe", important: false,id:1},
+        {lbl: "Make Awesome App", important: true,id:2},
+        {lbl: "Have a lanch", important: false,id:3}
     ]
     return(
         <div>
