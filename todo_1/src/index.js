@@ -4,6 +4,9 @@ import ReactDOM from 'react-dom';
 import AppHeader from './components/app-header';
 import SearchPanel from './components/search-panel';
 import TodoList from './components/todo-list';
+import ItemStatusFilter from './components/item-status-filter';
+
+import './index.css';  // Webpack поддерживает импорт СSS файлов из JS модулей
 
 // const el = (
 //     <div>
@@ -83,19 +86,17 @@ const App = () => {
         {lbl: "Make Awesome App", important: true,id:2},
         {lbl: "Have a lanch", important: false,id:3}
     ]
-    return(
-        <div>
-            <span>{(new Date()).toLocaleString('ru', { year: 'numeric', day: 'numeric', month: 'long' })}</span>
-            
-            <div>
-                {isLoggedIn ? welcomBox : loginBox}
-            </div>
-            
-            <AppHeader />
+    return (
+        <div className="todo-app">
+          <AppHeader toDo={1} done={3} />
+          <div className="top-panel d-flex">
             <SearchPanel />
-            <TodoList todos = {todoData}/>
-        </div> 
-    );    
+            <ItemStatusFilter />
+          </div>
+    
+          <TodoList todos={todoData} />
+        </div>
+      );
 };
 
 ReactDOM.render(<App />, document.getElementById('root'));
