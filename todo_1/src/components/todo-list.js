@@ -17,7 +17,7 @@ function TodoList({ todos }) {  // пропсы от index.js
         // атрибута вместе со значением в клмпонент
         // можно и так:
         // return (
-        //     <li key={ind}><TodoListItem {...itemProps}  /></li>      
+        //     <li key={id}><TodoListItem {...itemProps}  /></li>      
         // )
         // а можно так
         return (
