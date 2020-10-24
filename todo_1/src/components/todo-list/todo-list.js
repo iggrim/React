@@ -1,6 +1,6 @@
 import React from 'react';
 
-import TodoListItem from './todo-list-item';
+import TodoListItem from '../todo-list-item';
 
 import './todo-list.css';  // Webpack поддерживает импорт СSS файлов из JS модулей
 

@@ -1,12 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import AppHeader from './components/app-header';
-import SearchPanel from './components/search-panel';
-import TodoList from './components/todo-list';
-import ItemStatusFilter from './components/item-status-filter';
+import App from './components/app';  // если не указано имя ффайла, то webpack пытется подключить файл index.js из этой папки
 
-import './index.css';  // Webpack поддерживает импорт СSS файлов из JS модулей
+// import AppHeader from './components/app-header/'; // если не указано имя ффайла, то webpack пытется подключить файл index.js из этой папки
+// import SearchPanel from './components/search-panel/';
+// import TodoList from './components/todo-list/';
+// import ItemStatusFilter from './components/item-status-filter/';
+
+// import './index.css';  // Webpack поддерживает импорт СSS файлов из JS модулей
 
 // const el = (
 //     <div>
@@ -75,29 +77,29 @@ React 0.13 уязвим для подобной XSS атаки, но начин�
 
 //ReactDOM.render(el, document.getElementById('root'));
 
-const App = () => {
+// const App = () => {
 
-    const isLoggedIn = true;
-    const loginBox = <span>введите логин</span> ; //---Элемент // можно передавать в JSX через {}
-    const welcomBox = 'завершить сеанс'; // -----------Строка // можно передавать в JSX через {}
+//     // const isLoggedIn = true;
+//     // const loginBox = <span>введите логин</span> ; //---Элемент // можно передавать в JSX через {}
+//     // const welcomBox = 'завершить сеанс'; // -----------Строка // можно передавать в JSX через {}
 
-    const todoData = [
-        {lbl: "Drink Koffe", important: false,id:1},
-        {lbl: "Make Awesome App", important: true,id:2},
-        {lbl: "Have a lanch", important: false,id:3}
-    ]
-    return (
-        <div className="todo-app">
-          <AppHeader toDo={1} done={3} />
-          <div className="top-panel d-flex">
-            <SearchPanel />
-            <ItemStatusFilter />
-          </div>
+//     const todoData = [
+//         {lbl: "Drink Water", important: false,id:1},
+//         {lbl: "Make Awesome App", important: true,id:2},
+//         {lbl: "Have a lanch", important: false,id:3}
+//     ]
+//     return (
+//         <div className="todo-app">
+//           <AppHeader toDo={1} done={3} />
+//           <div className="top-panel d-flex">
+//             <SearchPanel />
+//             <ItemStatusFilter />
+//           </div>
     
-          <TodoList todos={todoData} />
-        </div>
-      );
-};
+//           <TodoList todos={todoData} />
+//         </div>
+//       );
+// };
 
 ReactDOM.render(<App />, document.getElementById('root'));
 // ReactDOM.render превращает React элементы в обычные браузерные DOM элементы и рендерит их на странице
