@@ -4,6 +4,7 @@ import AppHeader from '../app-header'; // если не указано имя ф
 import SearchPanel from '../search-panel';
 import TodoList from '../todo-list';
 import ItemStatusFilter from '../item-status-filter';
+import ItemAddForm from '../item-add-form';
 
 import './app.css';  // Webpack поддерживает импорт СSS файлов из JS модулей
 
@@ -12,6 +13,8 @@ export default class App extends Component {
     // const isLoggedIn = true;
     // const loginBox = <span>введите логин</span> ; //---Элемент // можно передавать в JSX через {}
     // const welcomBox = 'завершить сеанс'; // -----------Строка // можно передавать в JSX через {}
+
+    maxId = 10;
 
     state = {
       todoData: [
@@ -22,7 +25,7 @@ export default class App extends Component {
     };
 
     deleteItem = (id) => {
-      //this.setState((state)=>{ // setState по умолчанию принимает на вход предыдущее состояние
+      //this.setState((state)=>{ // ---функция--- setState принимает на вход другую функцию параметром которой по умолчанию является объект описываюзий предыдущее состояние
       this.setState(({todoData})=>{ // сразу дестриктурируем state
         //const idx = todoData.findIndex((el)=>el.id===id);
         // todoData.splice(idx, 1); // плохая практика, нельзя менять существующий стейт
@@ -32,6 +35,18 @@ export default class App extends Component {
             todoData: newArray
           }
       })
+    }
+
+    itemAdded = (text) =>{
+      ///console.log('Added', newItem);
+      const newItem = {lbl:text, important:false, id:this.maxId++};
+      
+      this.setState(({todoData})=>{ // ---функция--- setState
+        const newArr = [...todoData, newItem];
+        return{
+          todoData: newArr     
+        }
+      })  
     }
     
     render(){
@@ -46,6 +61,8 @@ export default class App extends Component {
           <TodoList 
             todos={this.state.todoData} 
             onDeleted={this.deleteItem}/>
+
+          <ItemAddForm itemAdded = {this.itemAdded}/>
         </div>
       );
     }
