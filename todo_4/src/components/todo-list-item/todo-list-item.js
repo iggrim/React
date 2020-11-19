@@ -27,21 +27,21 @@ export default class TodoListItem extends Component{
     //     console.log(`Done: ${this.props.lbl}`);     
     // }
 
-    state = {  // 2-й способ
-        done: false,
-        important: false
-    };
+    // state = {  // 2-й способ
+    //     done: false,
+    //     important: false
+    // };
 
-    onLabelClick = () => { // (3-й способ) создаем функцию на прототипе класса
-        //console.log(`Done: ${this.props.lbl}`);    
-        // при каждом изменении стейта реакт запускает Reconciliation Algorithm (алгоритм согласования) и вызывается функция render для обновления ---только измененных--- параметров
-        // ----setState работает асинхронно, поэтому когда новое состояние зависит от предыдущего в аргумент передаем функцию которая выполнится тогда, когда стейт будет иметь финальное состояние, иначе в setState можно сразу передать объект----
-        this.setState((state)=>{ // setState принимает функцию возвращающую объект state, входящий параметр этой функции-объект state  с предыдущим состоянием
-            return {
-                done: !state.done
-            }
-        })
-    }
+    // onLabelClick = () => { // (3-й способ) создаем функцию на прототипе класса
+    //     //console.log(`Done: ${this.props.lbl}`);    
+    //     // при каждом изменении стейта реакт запускает Reconciliation Algorithm (алгоритм согласования) и вызывается функция render для обновления ---только измененных--- параметров
+    //     // ----setState работает асинхронно, поэтому когда новое состояние зависит от предыдущего в аргумент передаем функцию которая выполнится тогда, когда стейт будет иметь финальное состояние, иначе в setState можно сразу передать объект----
+    //     this.setState((state)=>{ // setState принимает функцию возвращающую объект state, входящий параметр этой функции-объект state  с предыдущим состоянием
+    //         return {
+    //             done: !state.done
+    //         }
+    //     })
+    // }
     
     // setState принимает только ту часть стейта, которая должна измениться
     // -----setState работает асинхронно-----
@@ -51,22 +51,25 @@ export default class TodoListItem extends Component{
     //     })
     // }
 
-    onMarkImportant = () => {         
-        this.setState((state)=>{
-            return {
-                important: !state.important
-            }
-        })
-    }
-
+    // onMarkImportant = () => {         
+    //     this.setState((state)=>{
+    //         return {
+    //             important: !state.important
+    //         }
+    //     })
+    // }
 
 
     // функция render() отображает компонент
     // render() не принимает на вход значения props
     // все свойств получаем через this.props внутри функции
     render(){ 
-        const { lbl, onDeleted } = this.props;  // пропсы от todo-list.js
-        const { done, important } = this.state;
+        const { lbl, onDeleted,
+            onToggleImportant, 
+            onToggleDone,
+            important,
+            done } = this.props;  // пропсы от todo-list.js
+        //const { done, important } = this.state;
         
         let classNames = 'todo-list-item';
         if(done){
@@ -90,13 +93,13 @@ export default class TodoListItem extends Component{
             <span className={classNames}>
                 <span className='todo-list-item-label'
                     /*style = {style}*/
-                    onClick = {this.onLabelClick}>
+                    onClick = {onToggleDone}>
                     {lbl}
                 </span>
     
                 <button type="button"
                     className="btn btn-outline-success btn-sm float-right"
-                    onClick={this.onMarkImportant}>
+                    onClick={onToggleImportant}>
                     <i className="fa fa-exclamation" />
                 </button>
     
