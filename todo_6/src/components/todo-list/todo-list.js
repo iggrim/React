@@ -4,49 +4,30 @@ import TodoListItem from '../todo-list-item';
 
 import './todo-list.css';  // Webpack поддерживает импорт СSS файлов из JS модулей
 
-function TodoList({ todos, onDeleted, onToggleImportant, onToggleDone, onEdit, searchText, activeStateBtn }) {  // пропсы от index.js
+function TodoList({ todos, onDeleted, onToggleImportant, onToggleDone, onEdit }) {  // пропсы от index.js
     // todos - это массив объектов - [{lbl: "Drink Koffe", important: false},....]
     
     //console.log(searchText);
-    let newData = todos // создаем новый массив исходя из строки поска searchText
-                    .filter((el)=>{   
-                    console.log(el.lbl.indexOf(searchText));                  
-                    return el.lbl.indexOf(searchText)>=0;
-                    });  
-    
-    if (activeStateBtn ==='all'){
-        newData =  newData.filter(el=>el);
-    }
-                    
-    if (activeStateBtn ==='active'){
-        newData =  newData.filter(el=>el.done === false);
-    };
-
-    if (activeStateBtn ==='done'){
-        newData =  newData.filter(el=>el.done === true);
-    };
-
-
-    
-        
+            
 	// const elements = todos.map((item, ind) => {
     //    const {id, ...itemProps} = item // иззвлекаем id
 	
-    const elements = newData.map((item, ind) => {
-        console.log(item); 
-        const {id, ...itemProps} = item // иззвлекаем id
+    const elements = todos.map((item, ind) => {
+        // 
+        const {id, ...itemProps} = item // извлекаем id
            
         // JSX поддерживает spread оператор для объектов. Когда имена,
         // свойств компонента совпадают с именами свойств объекта
-        // то можно, например у нас по ходу итерации массива, заменить блок кода 
-        // <TodoListItem lbl = {todos[0].lbl} /> на <TodoListItem {...item} и т.д.
+        // то можно, например, у нас по ходу итерации массива, заменить блок кода 
+        // <TodoListItem lbl = {todos[0].lbl} important = {todos[0].important} и т.д. /> 
+        // на <TodoListItem {...item} 
         // т.е. взять каждое свойство из объекта item и передать его в качестве
-        // атрибута вместе со значением в клмпонент
-        // можно и так:
+        // атрибута вместе со значением в компонент
+        //
         // return (
         //     <li key={id}><TodoListItem {...itemProps}  /></li>      
         // )
-        // а можно так
+        // 
         return (
             /*<li key={ind} className='list-group-item'><TodoListItem {...item} /></li>*/
             <li key={id} className='list-group-item'>

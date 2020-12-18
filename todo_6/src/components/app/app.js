@@ -21,7 +21,9 @@ export default class App extends Component {
         {lbl: "Drink Koffe", important:false, done:false, id:1},
         {lbl: "Make Awesome App", important: false, done:false, id:2},
         {lbl: "Have a lanch", important:false, done:false, id:3}
-      ]
+      ],
+      saerchText:'',
+      filterBtn:'All'
     };
 
 
@@ -72,8 +74,7 @@ export default class App extends Component {
     onToggleProp = (id,item) => {
       this.setState(({todoData})=>{
         const idx = todoData.findIndex((el)=>el.id === id)
-        //const newArrayFilter = todoData.filter((el)=>el.id === id);
-        //console.log(newArray);
+        
         const oldItem = todoData[idx];
 	      //1. Изменяем в объекте значение свойства done
         const newItem = {...oldItem, [item]:!oldItem[item]};
@@ -98,47 +99,51 @@ export default class App extends Component {
       this.onToggleProp(id,'done');
     };
 
-
-    searchText = ''; // строка поиска для TodoList
-
-    onSearch = (text) => { // функция для SearchPanel
-      console.log(text);
-        this.searchText = text;
-        //console.log(this.searchText);
-        this.setState(({todoData}) => { // обновление состояния 
-          return{todoData}
-        });
+    onSearch = (saerchText)=>{
+      this.setState({saerchText});
     };
 
-
-    activeStateBtn = '';
-    
-    onActive = (param)=>{
-      this.activeStateBtn = param;
-      this.setState(({todoData}) => { // обновление состояния 
-          return{todoData}
-        });
+    nameFilter = (filterBtn) =>{
+      this.setState({filterBtn});
     };
-   
+
+    searchData = (todoData, saerchText) =>{
+      if (saerchText==='')
+        return  todoData;
+
+      return todoData.filter((el)=>el.lbl.toLowerCase()
+                     .indexOf(saerchText.toLowerCase())>-1);
+    } ;  
+
+    searchDataFilter = (searchData, filterBtn) =>{
+       if (filterBtn ==='Done'){
+            return searchData.filter((el)=>el.done);
+       } else if(filterBtn ==='Active'){
+            return searchData.filter((el)=>!el.done);
+       } else {
+            return searchData
+       }
+    };
     
     render(){
-      //console.log(this.state.todoData);
-      const countDown = this.state.todoData
-                    .filter((el)=>el.done).length;
-      const todoCount =  this.state.todoData.length - countDown  ;         
-      //console.log(countDown); 
+      const {todoData, filterBtn, saerchText} =  this.state;   
+
+      const countDown = todoData.filter((el)=>el.done).length;
+      const todoCount =  todoData.length - countDown  ;         
+       
+      const data = this.searchDataFilter(this.searchData(todoData, saerchText ), filterBtn); 
+      
       return (
         <div className="todo-app">
           <AppHeader toDo={todoCount} done={countDown} />
           <div className="top-panel d-flex">
             <SearchPanel onSearch={this.onSearch}/>
-            <ItemStatusFilter onActive={this.onActive} classParam={this.activeStateBtn}/>
+            <ItemStatusFilter nameFilter = {this.nameFilter} filterBtn={this.state.filterBtn}/>
           </div>
     
           <TodoList 
-            searchText = {this.searchText}
-            activeStateBtn = {this.activeStateBtn}
-            todos={this.state.todoData} 
+            
+            todos={data} 
             onDeleted={this.deleteItem}
             onToggleImportant = {this.onToggleImportant}
             onToggleDone = {this.onToggleDone}
