@@ -1,0 +1,1 @@
+7z a -tzip -ssw -mx9 -r0 -xr'!node_modules' blog.zip
